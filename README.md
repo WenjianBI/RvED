@@ -12,7 +12,8 @@ A very useful tool (ImpG-Summary) to impute summary statistics can be found in h
 - Download sample panels of 1000 Genome in http://bochet.gcc.biostat.washington.edu/beagle/1000_Genomes_phase3_v5a/sample_info/?C=D;O=A
 
 ### Step 2: 
-Use ImpG-Summary and the reference panel (default panel is 1000 Genome) to impute summary statistics of all variants in reference panel.
+Use ImpG-Summary to impute summary statistics.
+- Generate *Haplotype file* and *SNP mapping file* from downloaded *1000 Genome files*.
 
 ### Step 3: 
 Conduct RvED method for any genome region by incorporating variants effect directions obtained in Step 2.

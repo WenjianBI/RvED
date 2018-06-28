@@ -8,7 +8,7 @@ A preliminary version of package can be found in RvED_0.1.tar.gz. More details i
 - A very useful tool (ImpG-Summary) to impute summary statistics can be found in https://github.com/huwenboshi/ImpG
 - Tool vcf2beagle.jar is downloaded from https://faculty.washington.edu/browning/beagle_utilities/utilities.html#vcf2beagle
 
-## Suggestion about variants effect directions:
+## Suggestion about variants effect directions assignment:
 ### Step 1: 
 - Download trait-specific summary statistics from public dataset such as GWAS-catalog (https://www.ebi.ac.uk/gwas/downloads/summary-statistics).
 - Download VCF files of 1000 Genome in http://bochet.gcc.biostat.washington.edu/beagle/1000_Genomes_phase3_v5a/b37.vcf/

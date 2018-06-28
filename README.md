@@ -7,7 +7,7 @@ A very useful tool (ImpG-Summary) to impute summary statistics can be found in h
 
 ## Suggested:
 ### Step 1: 
-- Download trait-specific summary statistics from public dataset such as GWAS-catalog, GWASdb and et al.
+- Download trait-specific summary statistics from public dataset such as GWAS-catalog (https://www.ebi.ac.uk/gwas/downloads/summary-statistics).
 - Download VCF files of 1000 Genome in http://bochet.gcc.biostat.washington.edu/beagle/1000_Genomes_phase3_v5a/b37.vcf/
 - Download sample panels of 1000 Genome in http://bochet.gcc.biostat.washington.edu/beagle/1000_Genomes_phase3_v5a/sample_info/?C=D;O=A
 

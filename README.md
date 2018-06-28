@@ -4,7 +4,7 @@ Incorporating Effect Directions Boosts Statistical Power  of Region-Based Associ
 ## R Package RvED_0.1.tar.gz
 A preliminary version of package can be found in RvED_0.1.tar.gz. More details including data simulation, model formulation and effect direction datasets would be updated soon. 
 
-NOTE: please install library kinship first.
+NOTE: please install R package of kinship before installing R package of RvED.
 
 ## Some bioinformatics tools 
 - A tool of ImpG-Summary to impute summary statistics can be found in https://github.com/huwenboshi/ImpG

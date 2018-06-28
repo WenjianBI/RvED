@@ -12,8 +12,9 @@ A very useful tool (ImpG-Summary) to impute summary statistics can be found in h
 - Download sample panels of 1000 Genome in http://bochet.gcc.biostat.washington.edu/beagle/1000_Genomes_phase3_v5a/sample_info/?C=D;O=A
 
 ### Step 2: 
-Use ImpG-Summary to impute summary statistics.
+Use ImpG-Summary to impute summary statistics (maybe the region need to be partitioned into some small regions).
 - Generate *Haplotype file* and *SNP mapping file* from downloaded *1000 Genome files*.
+- Generate *Typed SNP file* based on downloaded *summary statistics file*.
 
 ### Step 3: 
 Conduct RvED method for any genome region by incorporating variants effect directions obtained in Step 2.

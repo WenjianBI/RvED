@@ -14,3 +14,7 @@ Note: The following three files are downloaded from http://bochet.gcc.biostat.wa
 - integrated_call_samples_v3.20130502.ALL.panel
 - integrated_call_samples.20130502.ALL.ped
 - integrated_call_male_samples_v3.20130502.ALL.panel
+
+The VCF file of 1000 Genome at phase 3 can be found in 
+http://bochet.gcc.biostat.washington.edu/beagle/1000_Genomes_phase3_v5a/b37.vcf/
+

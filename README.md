@@ -17,4 +17,6 @@ Apply ImpG-Summary to impute summary statistics
 - Download VCF files of 1000 Genome in http://bochet.gcc.biostat.washington.edu/beagle/1000_Genomes_phase3_v5a/b37.vcf/
 - Use vcf2beagle.jar to generate *bgl.gz* file and *markers* file for 1000 Genome data.
 - Download sample panels of 1000 Genome in http://bochet.gcc.biostat.washington.edu/beagle/1000_Genomes_phase3_v5a/sample_info/?C=D;O=A
+### NOTE about imputation
+- All files of .gz should be extracted first.
 

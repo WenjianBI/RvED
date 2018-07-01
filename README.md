@@ -7,7 +7,7 @@ A preliminary version of package can be found in RvED_0.1.tar.gz. More details i
 NOTE: please install R package of kinship before installing R package of RvED.
 
 ## Some bioinformatics tools 
-- A tool of ImpG-Summary to impute summary statistics can be found in https://github.com/huwenboshi/ImpG
+- A tool of ImpG-Summary to impute summary statistics can be found in https://github.com/huwenboshi/ImpG, and then first change directory into ImpG-Bins and execute the "make" command.
 - A tool of vcf2beagle.jar to transform VCF file to Beagle file can be found in  https://faculty.washington.edu/browning/beagle_utilities/utilities.html#vcf2beagle
 
 ## Suggestion about variants effect directions assignment:

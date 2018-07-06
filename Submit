@@ -1,0 +1,16 @@
+bsub -J wbi1[1-22] -q biostat -P 1234 'module load python/3.2.2;
+CHR=$LSB_JOBINDEX;
+# CHR=20;
+mkdir /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/output/chr$CHR;
+cp -R /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/backup/ImpG-master/ImpG-Bins /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/output/chr$CHR;
+cd  /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/output/chr$CHR/ImpG-Bins;
+module load gcc;
+make;
+
+python /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/bwj.py \
+  -p /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/integrated_call_male_samples_v3.20130502.ALL.panel \
+  -o /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/output/chr$CHR \
+  -m /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/chr$CHR.1kg.phase3.v5a.markers \
+  -b /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/chr$CHR.1kg.phase3.v5a.bgl \
+  -t /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/Prins_hdl/Prins_28887542_hdl_chr$CHR.txt \
+  --pop EUR --bin /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/output/chr$CHR/ImpG-Bins --maf 0.0001 --lambd 0.1'

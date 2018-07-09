@@ -63,7 +63,7 @@ for(i in pos.CVs){
 }
 ```
 
-The bash code
+### The bash code
 ```
 cp -R /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/backup/ImpG-master/ImpG-Bins /home/wbi1/one_sided_SKAT/sim1000G;
 cd  /home/wbi1/one_sided_SKAT/sim1000G/ImpG-Bins;

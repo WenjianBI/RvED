@@ -1,3 +1,4 @@
+
 #　This folder is for simulations 
 
 - Step1: download 1000 Genome reference panels

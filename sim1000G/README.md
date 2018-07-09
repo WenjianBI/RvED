@@ -22,34 +22,48 @@ cat region.EUR.recode.vcf | java -jar vcf2beagle.jar . region.EUR
 
 ### The R code
 ```
+# bsub -J simu[1-1000] -q biostat -P 1234 'module load python/3.2.2; module load R/3.3.1; R --no-save --arg %I --$LSB_JOBINDEX </home/wbi1/one_sided_SKAT/sim1000G/sim1000G.R'
+
+# install.packages("sim1000G")
 library(sim1000G)
 
-vcf_file="Y:/one_sided_SKAT/sim1000G/region.EUR.recode.vcf"
+args = commandArgs()
+n.cpu = as.numeric(substr(args[5],3,10))
+
+dir_output=paste0("/home/wbi1/one_sided_SKAT/sim1000G/Reps/","rep_",n.cpu)
+dir.create(dir_output)
+setwd(dir_output)
+
+vcf_file="/home/wbi1/one_sided_SKAT/sim1000G/region.EUR.recode.vcf"
 vcf = readVCF(vcf_file, min_maf = NA, max_maf = NA,maxNumberOfVariants = 3500)
 af = apply(vcf$gt1+vcf$gt2,1,mean)/2
 maf = ifelse(af<0.5,af,1-af)
-region.EUR <- read.delim("Y:/one_sided_SKAT/sim1000G/region.EUR.markers", header=FALSE)
+region.EUR <- read.delim("/home/wbi1/one_sided_SKAT/sim1000G/region.EUR.markers", header=FALSE)
 combine=cbind(region.EUR,af,maf)
 colnames(combine)=c("SNP","pos","REF","ALT","ALT.AF","MAF")
 
 ### Simulate genotype data
-startSimulation(vcf, totalNumberOfIndividuals = 2000)
-ids = generateUnrelatedIndividuals(1000)
+set.seed(n.cpu)
+readGeneticMapFromFile("/home/wbi1/one_sided_SKAT/sim1000G/genetic_map_GRCh37_chr4.txt.gz")
+startSimulation(vcf, totalNumberOfIndividuals = 3000)
+ids = generateUnrelatedIndividuals(2000)
 
 genotype = retrieveGenotypes(ids)
 
-### Simulate phenotype data
 pos.CVs=which(combine$MAF>0.05)
 pos.RVs=which(combine$MAF<0.05)
 
-n.causalRVs=10
+n.causalRVs=32
 c=0.2   # an efficient for effect size assignment
-pos.cRVs=sample(pos.CVs,n.causalRVs)
+pos.cRVs=sample(pos.RVs,n.causalRVs)
 dir.cRVs=sample(c(1,-1),n.causalRVs,replace = T)
 maf.cRVs=combine$MAF[pos.cRVs]
 eff.cRVs=c*abs(log10(maf.cRVs))
 
-phenotype = colSums(t(genotype[,pos.cRVs])*dir.cRVs*eff.cRVs)
+combine$dir.cRVs=0
+combine$dir.cRVs[pos.cRVs]=dir.cRVs
+
+phenotype = colSums(t(genotype[,pos.cRVs])*dir.cRVs*eff.cRVs)+rnorm(nrow(genotype))
 
 ### Calculate Z-score for common variants
 for(i in pos.CVs){
@@ -61,19 +75,21 @@ for(i in pos.CVs){
   if(i==pos.CVs[1]) Z.CVs=data.frame(basic,z)
   else Z.CVs=rbind(Z.CVs,data.frame(basic,z))
 }
-```
 
-### The bash code
-```
-cp -R /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/backup/ImpG-master/ImpG-Bins /home/wbi1/one_sided_SKAT/sim1000G;
-cd  /home/wbi1/one_sided_SKAT/sim1000G/ImpG-Bins;
-module load gcc;
-make;
-python /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/bwj.py \
-  -p /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/integrated_call_samples_v3.20130502.ALL.panel \
-  -o /home/wbi1/one_sided_SKAT/sim1000G/output \
-  -m /home/wbi1/one_sided_SKAT/sim1000G/region.EUR.markers \
-  -b /home/wbi1/one_sided_SKAT/sim1000G/region.EUR.bgl \
-  -t /home/wbi1/one_sided_SKAT/sim1000G/Zscore.txt \
-  --pop EUR --bin /home/wbi1/one_sided_SKAT/sim1000G/ImpG-Bins --maf 0.0001 --lambd 0.1
+### 
+write.table(Z.CVs[,c("SNP","pos","REF","ALT","z")],"Zscore.txt",quote = F,row.names = F)
+write.table(combine,"true.txt",quote = F,row.names = F)
+
+system(paste("cp -R /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/backup/ImpG-master/ImpG-Bins",dir_output))
+setwd("ImpG-Bins")
+system("make")
+
+system(paste("python /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/bwj.py",
+       "-p /home/wbi1/one_sided_SKAT/summary-statistics-ImpG/integrated_call_samples_v3.20130502.ALL.panel",
+       "-o ../",
+       "-m ../../../region.EUR.markers",
+       "-b ../../../region.EUR.bgl",
+       "-t ../Zscore.txt",
+       "--pop EUR --bin ./",
+       "--maf 0.0001 --lambd 0.1"))
 ```

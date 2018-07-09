@@ -16,6 +16,6 @@ zcat $vcf_file | awk '{if(NR<=5 || ($2>=77356278 && $2<=77703432)) print $0}' > 
 
 cat integrated_call_samples_v3.20130502.ALL.panel | awk '$3 ~ /EUR/ {print $1}' > EUR.panel
 module load vcftools
-vcftools --vcf region.bwj.vcf --out region.EUR --recode --keep EUR.panel --maf 0.0001
+vcftools --vcf region.bwj.vcf --out region.EUR --recode --keep EUR.panel --maf 0.0001 --remove-indels
 cat region.EUR.recode.vcf | java -jar vcf2beagle.jar . region.EUR
 ```

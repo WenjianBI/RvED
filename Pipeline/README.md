@@ -12,4 +12,7 @@
 - Extract alleles in mapping file to generate FRQ file, raw genotype file, REF and ALT alleles must be specified
 
 ### Useful code:
-- step-5-QC_rsq_0.3 remove imputated variants whose R-sq less than 0.3 and maf greater than 0.05
+- step-5-QC_rsq_0.3.sh remove imputated variants whose R-sq less than 0.3 and maf greater than 0.05
+- Genotypes_1.sh extract genotypes based on annotation information
+- Genotypes_R.R generate R objects for further analysis
+- main.R final step for analysis

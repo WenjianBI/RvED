@@ -7,6 +7,6 @@
 - Phenotype file
 
 ### Process:
-- USE ANNO to annotate for all alleles
+- USE ANNOVAR (http://annovar.openbioinformatics.org/en/latest/) to annotate all alleles
 - Generate a mapping file with SNP_id and region_id based on annotation file
 - Extract alleles in mapping file to generate FRQ file, raw genotype file, REF and ALT alleles must be specified

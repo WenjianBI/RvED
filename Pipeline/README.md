@@ -10,3 +10,6 @@
 - USE ANNOVAR (http://annovar.openbioinformatics.org/en/latest/) to annotate all alleles
 - Generate a mapping file with SNP_id and region_id based on annotation file
 - Extract alleles in mapping file to generate FRQ file, raw genotype file, REF and ALT alleles must be specified
+
+### Useful code:
+- step-5-QC_rsq_0.3 remove imputated variants whose R-sq less than 0.3 and maf greater than 0.05

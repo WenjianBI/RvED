@@ -16,3 +16,13 @@
 - Genotypes_1.sh extract genotypes based on annotation information
 - Genotypes_R.R generate R objects for further analysis
 - main.R final step for analysis
+
+
+### vcf2R.sh:
+- Example code:
+```vcf_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.vcf
+anno_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.anno.hg19_multianno.txt
+output_dir=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/Results
+output_prefix=chr21.maf.0.05.R2.0.3.dose
+vcf2R.sh vcf_file anno_file output_dir output_prefix
+```

@@ -46,4 +46,4 @@ plink --vcf $VCF --extract ${PREFIX}.reformat.anno.pos --recodeA --freq --out $P
 # output_dir=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/Results
 # output_prefix=chr21.maf.0.05.R2.0.3.dose
 # VCF=$vcf_file;ANNO=$anno_file;DIR=$output_dir;PREFIX=$output_prefix
-# vcf2R.sh vcf_file anno_file output_dir output_prefix
+# vcf2map.sh $vcf_file $anno_file $output_dir $output_prefix

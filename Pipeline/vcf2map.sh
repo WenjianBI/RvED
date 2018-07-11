@@ -35,7 +35,7 @@ NR>1 {
         print $ix["Chr"], $ix["Start"],$ix["Ref"],$ix["Alt"],$ix["avsnp147"],$ix["Gene.refGene"],$ix["Func.refGene"]
 }' > ${PREFIX}.reformat.anno 
 
-# Step 2: 
+# Step 2: Extract genotype from VCF file
 cat ${PREFIX}.reformat.anno | awk -F "\t" '{print $1":"$2}' > ${PREFIX}.reformat.anno.pos
 plink --vcf $VCF --extract ${PREFIX}.reformat.anno.pos --recodeA --freq --out $PREFIX
 

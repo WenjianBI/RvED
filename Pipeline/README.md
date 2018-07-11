@@ -25,5 +25,5 @@ vcf_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.
 anno_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.anno.hg19_multianno.txt
 output_dir=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/Results
 output_prefix=chr21.maf.0.05.R2.0.3.dose
-./vcf2map.sh vcf_file anno_file output_dir output_prefix
+./vcf2map.sh $vcf_file $anno_file $output_dir $output_prefix
 ```

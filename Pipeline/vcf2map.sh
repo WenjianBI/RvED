@@ -8,28 +8,42 @@ echo "vcf2R.sh vcf_file anno_file output_dir output_prefix"
 exit
 fi
 
-VCF=$1      # VCF file. NOTE that VCF file and annotation file should follow the same reference panel.
-ANNO=$2     # annotation file (by ANNOVAR) with columns of 'Func.refGene', 'Gene.refGene', 'avsnp147'
+VCF=$1      # VCF file. NOTE that VCF file and annotation file should follow the same reference panel. ID column should be as format of chr:pos 
+ANNO=$2     # annotation file (by ANNOVAR) with columns of 'Chr','Start','Ref','Alt','avsnp147','Func.refGene','Gene.refGene' at least.
 DIR=$3      # Output directory
 PREFIX=$4   # Prefix for output files
 
-module load vcftools/0.1.15
+module load plink/1.90b
 
 mkdir ${DIR} -p
 cd ${DIR}
 
-# Use ANNO file to select variants and use PED file to select subjects 
-cat ${ANNO} | awk -F "\t" '{if($6~/\yexonic/)print $0}' > ${PREFIX}.anno
-cat ${PREFIX}.anno | awk -F "\t" '{print $1"\t"$14}' > ${PREFIX}.anno.pos 
+## Use ANNO file to select variants and update VCF files to remove unrelevant variants 
+# Step 1: Reformat ANNO file to retain 'Chr','Start','Ref','Alt','avsnp147','Func.refGene','Gene.refGene' and filter alleles based on specific rules (here, we remove indel alleles and alleles without SNP rsID, only keep exonic allele)
+cat ${ANNO} | awk '
+BEGIN {
+    FS="\t"; OFS="\t"
+}
+NR==1 {
+    for (i==1; i<=NF; i++){
+        ix[$i]=i
+    }
+}
+NR>1 {
+    # remove indel alleles and alleles without SNP rsID, only keep exonic allele
+    if(length($ix["Ref"])==1 && length($ix["Alt"])==1 && substr($ix["avsnp147"],1,2)=="rs" && $ix["Func.refGene"]=="exonic") 
+        print $ix["Chr"], $ix["Start"],$ix["Ref"],$ix["Alt"],$ix["avsnp147"],$ix["Gene.refGene"],$ix["Func.refGene"]
+}' > ${PREFIX}.reformat.anno 
 
-# Use vcftools to generate numeric matrix for genotype
-vcftools --vcf ${VCF} --keep ${SUBJ} --out ${PREFIX} --012 --positions ${PREFIX}.anno.pos
-vcftools --vcf ${VCF} --keep ${SUBJ} --out ${PREFIX} --freq --positions ${PREFIX}.anno.pos
+# Step 2: 
+cat ${PREFIX}.reformat.anno | awk -F "\t" '{print $1":"$2}' > ${PREFIX}.reformat.anno.pos
+plink --vcf $VCF --extract ${PREFIX}.reformat.anno.pos --recodeA --freq --out $PREFIX
+
 
 ## Example
-vcf_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.vcf
-anno_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.anno.hg19_multianno.txt
-output_dir=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10
-output_prefix=chr21.maf.0.05.R2.0.3.dose
+# vcf_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.vcf
+# anno_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.anno.hg19_multianno.txt
+# output_dir=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10
+# output_prefix=chr21.maf.0.05.R2.0.3.dose
 # VCF=$vcf_file;ANNO=$anno_file;DIR=$output_dir;PREFIX=$output_prefix
-vcf2R.sh vcf_file anno_file output_dir output_prefix
+# vcf2R.sh vcf_file anno_file output_dir output_prefix

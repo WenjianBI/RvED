@@ -19,6 +19,12 @@
 
 
 ### Pipeline 
+- Step 0: RUN ANNOVAR for annotation
+```
+module load annovar/030717
+
+```
+
 - Step 1: RUN vcf2R.sh:
 ```
 vcf_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.vcf

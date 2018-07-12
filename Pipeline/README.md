@@ -23,9 +23,10 @@ If the VCF file is from Michigan Imputation Server, please follow [here](https:/
 
 - Step 1: RUN vcf2R.sh:
 ```
-vcf_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.vcf
-anno_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.anno.hg19_multianno.txt
-output_dir=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/Results
+cd /home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10
+vcf_file=chr21.maf.0.05.R2.0.3.dose.vcf
+anno_file=chr21.maf.0.05.R2.0.3.dose.anno.hg19_multianno.txt
+output_dir=Results
 output_prefix=chr21.maf.0.05.R2.0.3.dose
 ./vcf2map.sh $vcf_file $anno_file $output_dir $output_prefix
 ```

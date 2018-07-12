@@ -19,11 +19,7 @@
 
 
 ### Pipeline 
-- Step 0: RUN ANNOVAR for annotation
-```
-module load annovar/030717
-
-```
+If the VCF file is from Michigan Imputation Server, please follow [here](https://github.com/WenjianBI/Bioinformatics) to filter SNPs with R2<0.3 and MAF<0.05, and annotate SNPs by the genome regions.
 
 - Step 1: RUN vcf2R.sh:
 ```

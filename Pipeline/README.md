@@ -18,12 +18,28 @@
 - main.R final step for analysis
 
 
-### vcf2R.sh:
-- Example code:
+### Pipeline 
+- Step 1: RUN vcf2R.sh:
 ```
 vcf_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.vcf
 anno_file=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/chr21.maf.0.05.R2.0.3.dose.anno.hg19_multianno.txt
 output_dir=/home/wbi1/one_sided_SKAT/Update_NFBC66_2018_07_10/Results
 output_prefix=chr21.maf.0.05.R2.0.3.dose
 ./vcf2map.sh $vcf_file $anno_file $output_dir $output_prefix
+```
+- Step 2: RUN map2final.R:
+```
+options(stringsAsFactors = F)
+library(RvED)
+source("map2final.R")
+output_dir="Y:/one_sided_SKAT/Update_NFBC66_2018_07_10/Results"
+output_prefix="chr21.maf.0.05.R2.0.3.dose"
+z <- read.csv("Y:/one_sided_SKAT/summary-statistics-ImpG/output/chr21/all.impz", sep="")
+Phen.all <- read.csv("Y:/one_sided_SKAT/Update_NFBC66_2018_07_10/pheno1.csv")
+pheno=Phen.all[,c("SUBJID","FS_KOL_H","FS_KOL_L","FS_TRIGL")]
+covar=Phen.all[,c("SUBJID","SEX")]
+colnames(pheno)[1]=colnames(covar)[1]="IID"
+colnames(covar)[2]="GENDER"   # colnames of covar/phenotype cannot conflict with raw data, so we change "SEX" to "GENDER"
+
+map2final(output_dir,output_prefix,z,pheno,covar)
 ```
